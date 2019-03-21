@@ -1,13 +1,33 @@
 #include "closing.h"
 #include <assert.h>
-
+ #define max(a,b) \
+   ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a > _b ? _a : _b; })
 
 // A implementer
 image2d* closing_1(const image2d* input, int N)
 {
-  // Implémentation à fournir
-  // Pour l'instant: une simple copie
-  return clone_image(input);
+    int N_ = N/2;   
+    image2d *out = create_image(input->width, input->height);
+    uint8_t *ilineptr = input->buffer;
+    uint8_t *olineptr = out->buffer;
+
+    for (int y = 0; y < input->height; y++)
+    {
+        for (int x = 0; x < input->width; x++)
+        {
+            uint8_t m = 0;
+            for (int p = y - N_; p <= y + N_; p++)
+            {
+                for (int q = x - N_; q <= x + N_; q++)
+                    m = max(m, ilineptr[p * input->width + q]);
+                olineptr[x] = m;
+            }
+        }
+        ilineptr += input->width;
+        olineptr += input->width;
+    }
 }
 
 
