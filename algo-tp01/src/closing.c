@@ -5,7 +5,6 @@
        __typeof__ (b) _b = (b); \
      _a > _b ? _a : _b; })
 
-// A implementer
 image2d* closing_1(const image2d* input, int N)
 {
     int N_ = N/2;   
@@ -18,7 +17,7 @@ image2d* closing_1(const image2d* input, int N)
         for (int x = 0; x < input->width; x++)
         {
             uint8_t m = 0;
-            for (int p = y - N_; p <= y + N_; p++)
+            for (int p = -N_; p <= N_; p++)
             {
                 for (int q = x - N_; q <= x + N_; q++)
                     m = max(m, ilineptr[p * input->width + q]);
